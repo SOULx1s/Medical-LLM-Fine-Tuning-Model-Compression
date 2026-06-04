@@ -47,3 +47,30 @@ The QLoRA-adapted engine delivered absolute statistical significance (*p < 0.001
 ├── frontend_flutter/          # Mobile application UI and API consumption logic
 ├── data_samples/              # Structural examples of the clinical datasets used
 └── README.md
+
+⚙️ Quick Start (Local Deployment)
+1. Clone the Repository:
+
+Bash
+git clone [https://github.com/AliAmer/efficient-llm-pipeline.git](https://github.com/AliAmer/efficient-llm-pipeline.git)
+cd efficient-llm-pipeline
+2. Setup the Python Backend (Virtual Environment recommended):
+
+Bash
+cd backend_fastapi
+pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 8000
+3. Run the Flutter Frontend:
+
+Bash
+cd ../frontend_flutter
+flutter pub get
+flutter run
+👨‍💻 Author
+Ali Amer
+
+Computer Science Professional
+
+LinkedIn Profile
+
+Built to demonstrate scalable AI engineering, memory-efficient LLM training, and secure offline deployment architectures.
