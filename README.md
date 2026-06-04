@@ -1,21 +1,26 @@
 # Medical-LLM-Fine-Tuning-Model-Compression
 A highly efficient LLM fine-tuning and deployment system using QLoRA and 4-bit quantization, optimized for low-resource environments. Demonstrated via a medical speech translation use-case.
 
-
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![PyTorch](https://img.shields.io/badge/PyTorch-Deep%20Learning-EE4C2C)
 ![Transformers](https://img.shields.io/badge/HuggingFace-Transformers-F9DC3E)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688)
 ![Flutter](https://img.shields.io/badge/Flutter-Mobile%20UI-02569B)
 
-##  Overview
+## 📌 Overview
 Deploying Large Language Models (LLMs) in real-world, localized environments often encounters severe hardware bottlenecks. This repository demonstrates a highly efficient, end-to-end deep learning pipeline designed to fine-tune and deploy heavy models entirely offline on medium-tier hardware (e.g., single NVIDIA T4, 12-16GB VRAM). 
 
 By leveraging **Parameter-Efficient Fine-Tuning (PEFT)** and **4-bit Quantization (QLoRA)**, the system drastically reduces memory footprints without catastrophic forgetting. 
 
 To validate the architecture's efficiency, it is benchmarked on a highly complex, zero-tolerance use case: **Real-Time Clinical Speech Translation (English-to-Arabic)**.
 
-##  Core Architectural Features
+## 🔗 Hugging Face Assets (Models & Data)
+To maintain strict software engineering best practices, the heavy model weights and the large clinical dataset are not included in this code repository. They are publicly hosted and version-controlled on Hugging Face:
+
+* **[🤗 Clinical English-Arabic Dataset](https://huggingface.co/datasets/SOULx1s/medical-english-arabic-clinical-corpus):** 50,000 highly curated medical sentence pairs (split into Train/Test for rigorous evaluation).
+* **[🤗 Fine-Tuned NLLB Adapter (QLoRA)](https://huggingface.co/SOULx1s/nllb-200-distilled-600M-qlora-medical):** The optimal 10-epoch, 4-bit quantized LoRA weights ready for plug-and-play inference.
+
+## ⚙️ Core Architectural Features
 * **Model Compression & Quantization:** Utilizes 4-bit NormalFloat (NF4) quantization via `bitsandbytes` to shrink the Meta `NLLB-200-distilled-600M` base model, allowing it to run concurrently with Whisper Large.
 * **Low-Rank Adaptation (LoRA):** Injects trainable rank decomposition matrices into the attention layers, updating only a fraction of parameters during training while keeping base weights frozen.
 * **Asynchronous Offline Backend:** A custom FastAPI orchestrator seamlessly handles the bidirectional data flow between the Speech-to-Text (ASR), translation engine, and Text-to-Speech (TTS) modules locally.
@@ -32,45 +37,17 @@ The QLoRA-adapted engine delivered absolute statistical significance (*p < 0.001
 
 | Metric | Baseline NLLB-200 | Fine-Tuned (10 Epochs) | Performance Delta |
 | :--- | :---: | :---: | :---: |
-| **BLEU** | 16.92 | **23.48** | 📈 Massive structural improvement |
-| **METEOR** | 37.67 | **47.55** | 📈 Enhanced morphological mapping |
-| **BERTScore (F1)** | 82.81% | **86.15%** | 🧠 Deep semantic equivalence |
-| **TER** | 71.15 | **73.22** | Maintained usability under complexity |
+| **BLEU** | 17.56 | **26.81** | 📈 Massive structural improvement |
+| **METEOR** | 38.83 | **48.93** | 📈 Enhanced morphological mapping |
+| **BERTScore (F1)** | 82.91% | **86.78%** | 🧠 Deep semantic equivalence |
+| **TER** | 71.16 | **64.68** | Maintained usability under complexity |
 
 *Note: Qualitative case studies showed flawless translation of complex pharmacological classes (e.g., ACE inhibitors) and clinical abbreviations (e.g., IM injections).*
 
-##  Repository Structure
+## 📂 Repository Structure
 ```text
 .
-├── model_training_qlora/      # Colab notebooks, data cleaning scripts, & requirements
-├── backend_fastapi/           # Local inference server, ASR/TTS integration handlers
-├── frontend_flutter/          # Mobile application UI and API consumption logic
-├── data_samples/              # Structural examples of the clinical datasets used
+├── model_training_pipeline/     # Colab notebooks, data cleaning scripts, & training pipeline
+├── backend_fastapi/             # Local inference server, ASR/TTS integration handlers
+├── frontend_flutter/            # Mobile application UI and API consumption logic
 └── README.md
-
-⚙️ Quick Start (Local Deployment)
-1. Clone the Repository:
-
-Bash
-git clone [https://github.com/AliAmer/efficient-llm-pipeline.git](https://github.com/AliAmer/efficient-llm-pipeline.git)
-cd efficient-llm-pipeline
-2. Setup the Python Backend (Virtual Environment recommended):
-
-Bash
-cd backend_fastapi
-pip install -r requirements.txt
-uvicorn main:app --host 0.0.0.0 --port 8000
-3. Run the Flutter Frontend:
-
-Bash
-cd ../frontend_flutter
-flutter pub get
-flutter run
-👨‍💻 Author
-Ali Amer
-
-Computer Science Professional
-
-LinkedIn Profile
-
-Built to demonstrate scalable AI engineering, memory-efficient LLM training, and secure offline deployment architectures.
