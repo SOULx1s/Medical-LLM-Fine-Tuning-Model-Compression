@@ -1,0 +1,10 @@
+torch
+torchvision
+torchaudio
+sentencepiece
+datasets
+tqdm
+bitsandbytes
+accelerate
+transformers
+peft
